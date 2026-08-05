@@ -7,7 +7,7 @@ This project is a minimal example of getting the **Mayflash S5** to work with so
 ## Two modes
 - **Wired** (default): the RP2040 shows up as a USB DualSense. Works on a PS5
   (with Bluetooth turned off on the console) or on a PC.
-- **Bluetooth**: hold **SELECT** while powering on. The RP2040 stays off USB and the S5 handles all the Bluetooth handling. It only connects to a host that has already paired the dongle (pairing is done on the host side).
+- **Bluetooth**: hold **SELECT** while powering on. The RP2040 stays off USB and the S5 handles all the Bluetooth handling. It only connects to a host that has already paired the **Mayflash S5** (pairing is done on the host side).
 
 ## Extras
 
@@ -36,3 +36,9 @@ Config live in [`include/config.h`](include/config.h). Edit them for your board 
 This can result in controlling a paired device over BT and a device connected over USB
 
 - Only works with the firmware version 1.08+ on the Mayflash S5
+
+## Credits & Thanks
+
+- Based on some of the work by **TheTrain** and **Lucipher** from the OpenStickCommunity.
+
+- Thanks to Mayflash for providing the secret to authenticate against the **Mayflash S5**
