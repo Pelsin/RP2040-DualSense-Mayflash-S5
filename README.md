@@ -1,6 +1,6 @@
 # Mayflash S5 → DualSense passthrough (RP2040)
 
-Turn a RP2040 board + a **Mayflash S5** into a DualSense controller that works on all games. Handles both USB and Bluetooth.
+Turn a RP2040 board + a **Mayflash S5** into a DualSense controller that works on all games on the PS5. Handles both USB and Bluetooth.
 
 This project is a minimal example of getting the **Mayflash S5** to work with some caveats, read more below. There might be bugs.
 

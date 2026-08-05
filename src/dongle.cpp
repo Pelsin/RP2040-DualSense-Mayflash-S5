@@ -25,7 +25,7 @@ static constexpr uint8_t S5_SET_AUTHPAYLOAD = 0xF0; // native auth: console payl
 static constexpr uint8_t S5_GET_SIGNNONCE = 0xF1;		// native auth: signature nonce
 static constexpr uint8_t S5_GET_SIGNSTATE = 0xF2;		// native auth: signing state
 
-// DES unlock key (matches the official spec).
+// DES secret key for the Mayflash S5 dongle, provided by Mayflash
 static constexpr uint8_t S5_DES_SECRET_KEY[16] = {
 		0x5C, 0x28, 0xE3, 0x05, 0x97, 0xC5, 0xAD, 0x04,
 		0x9E, 0x5D, 0x19, 0xC3, 0x25, 0x40, 0x5B, 0x9D};
@@ -55,6 +55,8 @@ static uint8_t s_f1_idx = 0;
 // After the unlock SET, the F300 goes silent ~810ms, then bus-resets the dongle
 // into its signing persona. The silence is the trigger, so we mirror it: idle,
 // then force a re-enumeration. Forcing it early just re-reads the non-signing persona.
+// This re-enumeration is a bit of a hack, might not even be needed...
+// TODO: Remove and check if the S5 still works
 enum ReenumStage : uint8_t
 {
 	RS_NONE = 0, // idle
