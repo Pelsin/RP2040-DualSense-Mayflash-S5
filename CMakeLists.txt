@@ -37,10 +37,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # at a valid Pico-PIO-USB checkout.
 #
 # Prefer the vendored submodule (lib/Pico-PIO-USB) so the project is standalone.
-# Fall back to the parent repo's patched checkout if the submodule has not been
-# initialized yet -- that patched copy references the `interval_override` symbol,
-# so we compile PicoPeripherals/interval_override.cpp only in that case.
-set(PASSTHRU_NEED_INTERVAL_OVERRIDE OFF)
+# This is the OpenStickCommunity/Pico-PIO-USB fork (branch dev), which references
+# the external `interval_override` symbol -- we always provide it via
+# src/interval_override.c. Fall back to the parent repo's checkout if the
+# submodule has not been initialized yet.
 if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-PIO-USB/CMakeLists.txt)
     set(PICO_PIO_USB_PATH ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-PIO-USB)
 elseif(EXISTS ${CMAKE_CURRENT_LIST_DIR}/../lib/pico_pio_usb/CMakeLists.txt)
@@ -48,7 +48,6 @@ elseif(EXISTS ${CMAKE_CURRENT_LIST_DIR}/../lib/pico_pio_usb/CMakeLists.txt)
                     "(not standalone). Run 'git submodule update --init' to vendor "
                     "lib/Pico-PIO-USB.")
     set(PICO_PIO_USB_PATH ${CMAKE_CURRENT_LIST_DIR}/../lib/pico_pio_usb)
-    set(PASSTHRU_NEED_INTERVAL_OVERRIDE ON)
 else()
     message(FATAL_ERROR "Pico-PIO-USB not found. Run: git submodule update --init "
                         "(expected at lib/Pico-PIO-USB).")
@@ -67,6 +66,7 @@ set(PASSTHRU_SOURCES
     src/led.cpp
     src/usb_descriptors.c
     src/pio_usb_reenumerate.c
+    src/interval_override.c
     ${MBEDTLS_DIR}/library/des.c
     ${MBEDTLS_DIR}/library/platform_util.c
 )
@@ -75,13 +75,6 @@ set(PASSTHRU_INCLUDES
     ${CMAKE_CURRENT_LIST_DIR}/include
     ${MBEDTLS_DIR}/include
 )
-
-# Only when falling back to the parent's patched Pico-PIO-USB.
-if(PASSTHRU_NEED_INTERVAL_OVERRIDE)
-    set(PICO_PERIPHERALS_DIR ${CMAKE_CURRENT_LIST_DIR}/../lib/PicoPeripherals)
-    list(APPEND PASSTHRU_SOURCES ${PICO_PERIPHERALS_DIR}/interval_override.cpp)
-    list(APPEND PASSTHRU_INCLUDES ${PICO_PERIPHERALS_DIR})
-endif()
 
 add_executable(mayflash_passthrough ${PASSTHRU_SOURCES})
 

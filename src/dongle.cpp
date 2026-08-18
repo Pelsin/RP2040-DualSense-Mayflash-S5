@@ -12,7 +12,8 @@
 #include <string.h>
 
 // Custom PIO-PIO-USB function to force a re-enumeration, perhaps there is a better way?
-// the upstream Pico-PIO-USB submodule does not provide it
+// Neither the upstream nor the OpenStickCommunity fork ships this (GP2040-CE
+// carried it as a local patch), so we provide it in src/pio_usb_reenumerate.c.
 extern "C" void pio_usb_host_force_reenumerate(uint8_t root_idx);
 
 // Mayflash S5 dongle: VID/PID, feature codes, DES unlock key, and other stuff
