@@ -66,6 +66,7 @@ set(PASSTHRU_SOURCES
     src/ssd1306.cpp
     src/led.cpp
     src/usb_descriptors.c
+    src/pio_usb_reenumerate.c
     ${MBEDTLS_DIR}/library/des.c
     ${MBEDTLS_DIR}/library/platform_util.c
 )

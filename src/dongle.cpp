@@ -11,6 +11,10 @@
 
 #include <string.h>
 
+// Custom PIO-PIO-USB function to force a re-enumeration, perhaps there is a better way?
+// the upstream Pico-PIO-USB submodule does not provide it
+extern "C" void pio_usb_host_force_reenumerate(uint8_t root_idx);
+
 // Mayflash S5 dongle: VID/PID, feature codes, DES unlock key, and other stuff
 static constexpr uint16_t S5_VID = 0x054C;
 static constexpr uint16_t S5_PID = 0x0CE6;
